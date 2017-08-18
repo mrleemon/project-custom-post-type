@@ -63,13 +63,13 @@ class Project_Custom_Post_Type {
 
 		add_action( 'init', array( $this, 'load_language' ) );
 		add_action( 'init', array( $this, 'register_custom_type' ) );
-		add_action( 'manage_posts_custom_column', array( $this, 'custom_columns' ) );
+		add_action( 'manage_project_posts_custom_column', array( $this, 'project_posts_custom_column' ) );
 		add_action( 'wp_enqueue_scripts', array( $this, 'enqueue_scripts' ) );
 		add_action( 'project_thumbnail', array( $this, 'project_thumbnail' ) );
 		add_action( 'project_attachments', array( $this, 'project_attachments' ), 10, 2 );
-		add_filter( 'manage_edit-project_columns', array( $this, 'edit_columns' ) );
+
+		add_filter( 'manage_project_posts_columns', array( $this, 'project_posts_columns' ) );
 		add_filter( 'template_include', array( $this, 'template_include' ) );
-		add_shortcode( 'projectindex', array( $this, 'display_shortcode' ) );
 	
 	}
 
@@ -81,7 +81,6 @@ class Project_Custom_Post_Type {
 	 *
 	 */
 	public function __construct() {}
-
 	
 	
  	/**
@@ -107,7 +106,6 @@ class Project_Custom_Post_Type {
 	/*
 	* register_custom_type  
 	*/
-  
 	function register_custom_type() {
 
 		$labels = array(
@@ -129,7 +127,7 @@ class Project_Custom_Post_Type {
 			'labels' => $labels,
 			'menu_position' => 5,
 			'menu_icon' => 'dashicons-format-gallery',
-			'supports' => array( 'title', 'excerpt', 'editor', 'thumbnail', 'page-attributes' ), 
+			'supports' => array( 'title', 'excerpt', 'editor', 'thumbnail' ), 
 			'rewrite' => true,
 			'has_archive' => 'projects'
 		);
@@ -188,7 +186,6 @@ class Project_Custom_Post_Type {
 	/*
 	 * enqueue_scripts 
 	 */
-	  
 	function enqueue_scripts() {
 		// Load lightGallery stylesheet.
 		wp_enqueue_style( 'lightgallery', plugins_url( '/css/lightgallery.css', __FILE__ ), array(), false );
@@ -204,12 +201,10 @@ class Project_Custom_Post_Type {
 	}
 
 
-	/* Function: edit_columns
-	 ** this function adds new columns to the admin project listing
-	 ** args:  
-	 ** returns:
+	/**
+	 * project_posts_columns
 	 */
-	function edit_columns( $columns ) {
+	function project_posts_columns( $columns ) {
 		$new = array();
 		foreach ( $columns as $key => $value ) {
 			if ( $key == 'title' ) {
@@ -222,24 +217,25 @@ class Project_Custom_Post_Type {
 	}
 
 
-	/* Function: custom_columns
-	 ** this function adds new columns to the admin project listing
-	 ** args:  
-	 ** returns:
+	/**
+	 * project_posts_custom_column
 	 */
-	function custom_columns( $column ) {
+	function project_posts_custom_column( $column ) {
 		global $post;
 		switch ( $column ) {
 			case 'thumbnail':
-				$width = (int) 100;
-				$height = (int) 100;
 				// image from gallery
-				$attachments = get_children( array( 'post_parent' => $post->ID, 'post_type' => 'attachment', 'post_mime_type' => 'image' ) );
+				$args = array(
+					'post_parent' => $post->ID, 
+					'post_type' => 'attachment',
+					'post_mime_type' => 'image'
+				);
+				$attachments = get_children( $args );
 				if ( has_post_thumbnail( $post->ID ) ) {
-					$thumb = get_the_post_thumbnail( $post->ID, array( $width, $height ) );
+					$thumb = get_the_post_thumbnail( $post->ID, array( 100, 100 ) );
 				} elseif ( $attachments ) {
 					foreach ( $attachments as $attachment_id => $attachment ) {
-						$thumb = wp_get_attachment_image( $attachment_id, array( $width, $height ), true );
+						$thumb = wp_get_attachment_image( $attachment_id, array( 100, 100 ), true );
 					}
 				}
 				if ( isset( $thumb ) && $thumb ) {
@@ -252,44 +248,9 @@ class Project_Custom_Post_Type {
 	}
 
 
-	/* Function: display_shortcode
-	 ** this function creates the index page
-	 ** args: string 
-	 ** returns: string
+	/**
+	 * project_thumbnail
 	 */
-	function display_shortcode( $atts ) {
-
-		extract(shortcode_atts(array(
-			'type' => 'thumbs',
-		), $atts) );
-		
-		if ( $type == 'thumbs' ) {
-
-			ob_start();
-			$this->get_template_part( 'index-thumbs' );
-			return ob_get_clean();
-
-		} elseif ( $type == 'list' ) {
-
-			ob_start();
-			$this->get_template_part( 'index-list' );
-			return ob_get_clean();
-				
-		} else {
-
-			ob_start();
-			$this->get_template_part( 'index-list' );
-			return ob_get_clean();
-		}
-				
-	}
-
-
-	/* Function: project_thumbnail
-	 ** args:  
-	 ** returns:
-	 */
-
 	function project_thumbnail( $size ) {
 		global $_wp_additional_image_sizes;
 
@@ -332,11 +293,9 @@ class Project_Custom_Post_Type {
 	}
 
 	
-	/* Function: project_attachments
-	 ** args:  
-	 ** returns:
+	/**
+	 * project_attachments
 	 */
-
 	function project_attachments( $id, $size ) {
 	 
 		$url_thumb = get_post_thumbnail_id( $id );
@@ -370,10 +329,8 @@ class Project_Custom_Post_Type {
 	}
 	
 
-	/* Function: template_include
-	** this function
-	 ** args: string 
-	 ** returns: string
+	/**
+	 * template_include
 	 */
 	function template_include( $template ) {
 		global $post;
@@ -397,10 +354,8 @@ class Project_Custom_Post_Type {
 	}
 
 
-	/* Function: get_template_part
-	** this function
-	 ** args: string 
-	 ** returns: string
+	/**
+	 * get_template_part
 	 */
 	function get_template_part( $slug, $name = null ) {
 		$templates = array();
@@ -415,10 +370,8 @@ class Project_Custom_Post_Type {
 	}
 
 
-	/* Function: locate_template
-	** this function
-	 ** args: string 
-	 ** returns: string
+	/**
+	 * locate_template
 	 */
 	function locate_template( $template_names, $load = false, $require_once = true ) {
 		if ( !is_array( $template_names ) ) {
