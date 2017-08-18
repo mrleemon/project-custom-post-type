@@ -1,0 +1,91 @@
+/**
+ * Project grid
+ */
+
+ .projects.thumbnails .project {
+	display: inline-block;
+	margin: 2px 2px;
+	vertical-align: top;
+}
+
+
+/**
+ * Single project
+ */
+
+.single-project .entry-header {
+    margin-bottom: 1.5em;
+}
+
+.single-project .entry-header .entry-title {
+    display: inline-block;
+	margin: 0;
+}
+
+.single-project .entry-header .toggle-content {
+	display: inline-block;
+    margin: 0 1em;
+	vertical-align: text-bottom;
+}
+
+.single-project .entry-header .toggle-content .toggled-on {
+    display: none;
+}
+
+.single-project .entry-content {
+    display: none;
+	margin-bottom: 20px;
+}
+
+.single-project .project-image {
+	float: left;
+	width: 20%;
+	margin: 0;
+	padding: 0;
+	box-sizing: border-box;
+}
+
+.single-project .project-image a {
+    display: block;
+    margin: 0;
+	padding: 0;
+}
+
+.single-project .project-image img {
+    display: block;
+    width: 100%;
+    margin: 0;
+	padding: 0;
+}
+
+
+/**
+ * jQuery lightgallery
+ */
+
+.lg-outer .lg-img-wrap {
+	padding: 2% !important;
+}
+
+.lg-backdrop {
+    background-color: rgba(0, 0, 0, 0.95);
+}
+
+.lg-toolbar {
+	background-color: transparent;
+}
+	
+.lg-actions .lg-next,
+.lg-actions .lg-prev,
+.lg-toolbar .lg-icon {
+/*	background-color: rgba(255, 255, 255, 0.45);*/
+}	
+
+.lg-actions .lg-next:hover,
+.lg-actions .lg-prev:hover,
+.lg-toolbar .lg-icon:hover,
+.lg-actions .lg-next:hover,
+.lg-actions .lg-prev:hover,
+.lg-toolbar .lg-icon:hover {
+/*    color: #333;*/
+}
