@@ -28,6 +28,7 @@ get_header(); ?>
 
 				<div class="entry-gallery">
 					<?php do_action( 'project_attachments', get_the_ID(), 'medium' ); ?>
+					<div class="loading"></div>
 				</div><!-- .entry-gallery -->
 
 				<?php
@@ -42,8 +43,6 @@ get_header(); ?>
 					) );
 				?>
 
-				<?php do_action( 'get_related_content', get_the_ID() ); ?>
-				
 			</article><!-- #post-## -->
 
 		<?php endwhile; // end of the loop. ?>

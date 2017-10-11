@@ -13,28 +13,28 @@
 	// Project archive grid
 	if ( $( '.post-type-archive-project .projects' ).size() > 0 ) {
 		var $container = $( '.post-type-archive-project .projects' );
-		$( '.post-type-archive-project .project img' ).css( 'visibility', 'hidden' );
+		$( '.post-type-archive-project .project img' ).css( 'opacity', 0 );
 		$container.imagesLoaded(function(){
 			$container.masonry({
 				itemSelector: '.project',
 				columnWidth: '.project',
 				percentPosition: true
 			});
-			$( '.post-type-archive-project .project img' ).css( 'visibility', 'visible' );
+			$( '.post-type-archive-project .project img' ).fadeTo( 400, 1 );
 		});
 	}
 
 	// Project grid
 	if ( $( '.single-project .entry-gallery' ).size() > 0 ) {
 		var $container = $( '.single-project .entry-gallery' );
-		$( '.single-project .entry-gallery img' ).css( 'visibility', 'hidden' );
+		$( '.single-project .entry-gallery img' ).css( 'opacity', 0 );
 		$container.imagesLoaded(function(){
 			$container.masonry({
 				itemSelector: '.project-image',
 				columnWidth: '.project-image',
 				percentPosition: true
 			});
-			$( '.single-project .entry-gallery img' ).css( 'visibility', 'visible' );
+			$( '.single-project .entry-gallery img' ).fadeTo( 400, 1 );
 		});
 	}
 	
