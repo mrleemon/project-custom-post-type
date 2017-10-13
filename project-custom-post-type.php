@@ -69,7 +69,7 @@ class Project_Custom_Post_Type {
 		add_action( 'project_attachments', array( $this, 'project_attachments' ), 10, 2 );
 
 		add_filter( 'manage_project_posts_columns', array( $this, 'project_posts_columns' ) );
-		add_filter( 'template_include', array( $this, 'template_include' ) );
+		add_filter( 'template_include', array( $this, 'template_include' ), 99 );
 	
 	}
 
@@ -132,7 +132,7 @@ class Project_Custom_Post_Type {
 			'has_archive' => 'projects'
 		);
 
-		register_post_type( 'project', $args);
+		register_post_type( 'project', $args );
 
 		// Categories
 
@@ -155,7 +155,7 @@ class Project_Custom_Post_Type {
 			'show_admin_column' => true
 		);    
 	  
-		register_taxonomy( 'project_category', 'project', $args);
+		register_taxonomy( 'project_category', 'project', $args );
 
 		// Tags
 
@@ -178,7 +178,7 @@ class Project_Custom_Post_Type {
 			'show_admin_column' => true
 		);    
 	  
-		register_taxonomy( 'project_tag', 'project', $args);
+		register_taxonomy( 'project_tag', 'project', $args );
 
 	} 
 
@@ -298,8 +298,6 @@ class Project_Custom_Post_Type {
 	 */
 	function project_attachments( $id, $size ) {
 	 
-		$url_thumb = get_post_thumbnail_id( $id );
-				
 		$args = array(
 			'order'          => 'ASC',
 			'orderby'        => 'menu_order',
@@ -312,17 +310,13 @@ class Project_Custom_Post_Type {
 		$attachments = get_posts($args);
 		if ( $attachments ) {
 			foreach ( $attachments as $attachment ) {
-
-				if ( $attachment->ID <> $url_thumb ) {
-					$image_attributes = wp_get_attachment_image_src( $attachment->ID, $size );
-					$image_attributes_full = wp_get_attachment_image_src( $attachment->ID, 'full' );
-					echo '<div class="project-image">';
-					echo '<a href="' . $image_attributes_full[0] . '">';                
-					echo '<img src="' . $image_attributes[0] . '" width="' . $image_attributes[1] . '" height="' . $image_attributes[2] . '" alt="" />';
-					echo '</a>';
-					echo '</div>';
-				}
-
+				$image_attributes = wp_get_attachment_image_src( $attachment->ID, $size );
+				$image_attributes_full = wp_get_attachment_image_src( $attachment->ID, 'full' );
+				echo '<div class="project-image">';
+				echo '<a href="' . $image_attributes_full[0] . '">';                
+				echo '<img src="' . $image_attributes[0] . '" width="' . $image_attributes[1] . '" height="' . $image_attributes[2] . '" alt="" />';
+				echo '</a>';
+				echo '</div>';
 			}
 		}
 		
