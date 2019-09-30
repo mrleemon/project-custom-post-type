@@ -401,5 +401,3 @@ class Project_Custom_Post_Type {
 }
 
 add_action( 'plugins_loaded', array ( Project_Custom_Post_Type::get_instance(), 'plugin_setup' ) );
-
-?>
