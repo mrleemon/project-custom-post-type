@@ -123,6 +123,7 @@ class Project_Custom_Post_Type {
       
 		$args = array(
 			'show_ui' => true,
+			'show_in_rest' => true,
 			'public' => true,
 			'labels' => $labels,
 			'menu_position' => 5,
@@ -149,6 +150,7 @@ class Project_Custom_Post_Type {
 		  
 		$args = array(
 			'show_ui' => true,
+			'show_in_rest' => true,
 			'public' => true,
 			'labels' => $labels,
 			'hierarchical' => true,
@@ -172,6 +174,7 @@ class Project_Custom_Post_Type {
 		  
 		$args = array(
 			'show_ui' => true,
+			'show_in_rest' => true,
 			'public' => true,
 			'labels' => $labels,
 			'hierarchical' => false,
@@ -188,15 +191,15 @@ class Project_Custom_Post_Type {
 	 */
 	function enqueue_scripts() {
 		// Load lightGallery stylesheet.
-		wp_enqueue_style( 'lightgallery', plugins_url( '/css/lightgallery.css', __FILE__ ), array(), false );
+		wp_enqueue_style( 'lightgallery', plugins_url( '/assets/css/lightgallery.css', __FILE__ ), array(), false );
 
 		// Load plugin stylesheet.
 		wp_enqueue_style( 'pcpt-style', plugins_url( '/style.css', __FILE__ ) );
 		
 		// Load scripts.
-		wp_enqueue_script( 'lightgallery-script', plugins_url( '/js/lightgallery.min.js', __FILE__ ), array( 'jquery' ), false, true );
+		wp_enqueue_script( 'lightgallery-script', plugins_url( '/assets/js/lightgallery.min.js', __FILE__ ), array( 'jquery' ), false, true );
 
-		wp_enqueue_script( 'pcpt-script', plugins_url( '/js/frontend.js', __FILE__ ), array( 'jquery', 'masonry', 'lightgallery-script' ), false, true );
+		wp_enqueue_script( 'pcpt-script', plugins_url( '/assets/js/frontend.js', __FILE__ ), array( 'jquery', 'masonry', 'lightgallery-script' ), false, true );
 
 	}
 
@@ -255,9 +258,8 @@ class Project_Custom_Post_Type {
 		global $_wp_additional_image_sizes;
 
 		if ( has_post_thumbnail( get_the_ID() ) ) {
-			$image_attributes = wp_get_attachment_image_src( get_post_thumbnail_id( get_the_ID() ), $size );
-			$html = '<a href="' . get_permalink() . '">';                
-			$html .= '<img src="' . $image_attributes[0] . '" width="' . $image_attributes[1] . '" height="' . $image_attributes[2] . '" alt="' . get_the_title() . '" />';
+            $html = '<a href="' . get_permalink() . '">';
+            $html .= wp_get_attachment_image( get_post_thumbnail_id( get_the_ID() ), $size );                
 			$html .= '</a>';
 		} else {
 			$args = array(
@@ -269,9 +271,8 @@ class Project_Custom_Post_Type {
 			$attachments = get_posts( $args );
 			if ( $attachments) {
 				foreach ( $attachments as $attachment ) {
-					$image_attributes = wp_get_attachment_image_src( $attachment->ID, $size );
-					$html = '<a href="' . get_permalink() . '">';                
-					$html = '<img src="' . $image_attributes[0] . '" width="' . $image_attributes[1] . '" alt="" />';
+                    $html = '<a href="' . get_permalink() . '">';                
+                    $html .= wp_get_attachment_image( $attachment->ID, $size );                
 					$html .= '</a>';
 				}
 			} else {
@@ -310,11 +311,10 @@ class Project_Custom_Post_Type {
 		$attachments = get_posts($args);
 		if ( $attachments ) {
 			foreach ( $attachments as $attachment ) {
-				$image_attributes = wp_get_attachment_image_src( $attachment->ID, $size );
 				$image_attributes_full = wp_get_attachment_image_src( $attachment->ID, 'full' );
 				echo '<div class="project-image">';
-				echo '<a href="' . $image_attributes_full[0] . '">';                
-				echo '<img src="' . $image_attributes[0] . '" width="' . $image_attributes[1] . '" height="' . $image_attributes[2] . '" alt="" />';
+                echo '<a href="' . $image_attributes_full[0] . '">';
+                echo wp_get_attachment_image( $attachment->ID, $size );
 				echo '</a>';
 				echo '</div>';
 			}
