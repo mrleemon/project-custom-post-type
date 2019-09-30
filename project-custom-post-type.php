@@ -59,7 +59,7 @@ class Project_Custom_Post_Type {
      */
     public function plugin_setup() {
 
-          $this->includes();
+        $this->includes();
 
         add_action( 'init', array( $this, 'load_language' ) );
         add_action( 'init', array( $this, 'register_custom_type' ) );
@@ -190,17 +190,13 @@ class Project_Custom_Post_Type {
      * enqueue_scripts 
      */
     function enqueue_scripts() {
-        // Load lightGallery stylesheet.
+        // Load styles.
         wp_enqueue_style( 'lightgallery', plugins_url( '/assets/css/lightgallery.css', __FILE__ ), array(), false );
-
-        // Load plugin stylesheet.
         wp_enqueue_style( 'pcpt-style', plugins_url( '/style.css', __FILE__ ) );
         
         // Load scripts.
         wp_enqueue_script( 'lightgallery-script', plugins_url( '/assets/js/lightgallery.min.js', __FILE__ ), array( 'jquery' ), false, true );
-
         wp_enqueue_script( 'pcpt-script', plugins_url( '/assets/js/frontend.js', __FILE__ ), array( 'jquery', 'masonry', 'lightgallery-script' ), false, true );
-
     }
 
 
@@ -252,32 +248,16 @@ class Project_Custom_Post_Type {
             $html .= wp_get_attachment_image( get_post_thumbnail_id( get_the_ID() ), $size );                
             $html .= '</a>';
         } else {
-            $args = array(
-                'post_type' => 'attachment',
-                'numberposts' => null,    
-                'post_status' => null,
-                'post_parent' => get_the_ID()
-            );
-            $attachments = get_posts( $args );
-            if ( $attachments) {
-                foreach ( $attachments as $attachment ) {
-                    $html = '<a href="' . get_permalink() . '">';                
-                    $html .= wp_get_attachment_image( $attachment->ID, $size );                
-                    $html .= '</a>';
-                }
+            if ( isset( $_wp_additional_image_sizes ) && count( $_wp_additional_image_sizes ) && in_array( $size, array_keys( $_wp_additional_image_sizes ) ) ) {
+                $width = $_wp_additional_image_sizes[$size]['width'];
+                $height = $_wp_additional_image_sizes[$size]['height'];
             } else {
-                if ( isset( $_wp_additional_image_sizes ) && count( $_wp_additional_image_sizes ) && in_array( $size, array_keys( $_wp_additional_image_sizes ) ) ) {
-                    $width = $_wp_additional_image_sizes[$size]['width'];
-                    $height = $_wp_additional_image_sizes[$size]['height'];
-                } else {
-                    $width = get_option( $size. '_size_w' );
-                    $height = get_option( $size. '_size_h' );
-                } 
-                $html = '<a href="' . get_permalink() . '">';                
-                $html .= '<img src="' . plugins_url( 'assets/images/placeholder.png', __FILE__ ) . '" width="' . $width . 
-                         '" height="' . $height . '" alt="' . get_the_title() . '" />';
-                $html .= '</a>';
-            }
+                $width = get_option( $size. '_size_w' );
+                $height = get_option( $size. '_size_h' );
+            } 
+            $html = '<a href="' . get_permalink() . '">';                
+            $html .= '<img src="' . plugins_url( 'assets/images/placeholder.png', __FILE__ ) . '" width="' . $width . '" height="' . $height . '" alt="' . get_the_title() . '" />';
+            $html .= '</a>';
         }    
         echo $html;
 
@@ -298,7 +278,7 @@ class Project_Custom_Post_Type {
             'post_status'    => null,
             'numberposts'    => -1,
         );
-        $attachments = get_posts($args);
+        $attachments = get_posts( $args );
         if ( $attachments ) {
             foreach ( $attachments as $attachment ) {
                 $image_attributes_full = wp_get_attachment_image_src( $attachment->ID, 'full' );
