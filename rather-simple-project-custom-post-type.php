@@ -2,7 +2,7 @@
 /*
   Plugin Name: Rather Simple Project Custom Post Type
   Plugin URI: 
-  Description: A simple project custom post type
+  Description: A really simple project custom post type
   Version: 1.0
   Author: Oscar Ciutat
   Author URI: http://oscarciutat.com/code
