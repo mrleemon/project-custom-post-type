@@ -1,13 +1,13 @@
 <?php
 /*
-  Plugin Name: Project Custom Post Type
-  Plugin URI: http://wordpress.org/plugins/project-custom-post-type/
-  Description: A project custom post type
+  Plugin Name: Rather Simple Project Custom Post Type
+  Plugin URI: 
+  Description: A simple project custom post type
   Version: 1.0
   Author: Oscar Ciutat
   Author URI: http://oscarciutat.com/code
-  Text Domain: project-custom-post-type
-  License: GPLv2 or later
+  Text Domain: rather-simple-project-custom-post-type
+  License: GPL v2 or later
 
   This program is free software; you can redistribute it and/or modify
   it under the terms of the GNU General Public License, version 2, as 
@@ -23,7 +23,7 @@
   Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 */
 
-class Project_Custom_Post_Type {
+class Rather_Simple_Project_Custom_Post_Type {
 
     /**
      * Plugin instance.
@@ -83,7 +83,7 @@ class Project_Custom_Post_Type {
     public function __construct() {}
     
     
-     /**
+    /**
      * Includes required core files used in admin and on the frontend.
      *
      * @since 1.0
@@ -99,7 +99,7 @@ class Project_Custom_Post_Type {
      *
      */
     function load_language() {
-        load_plugin_textdomain( 'project-custom-post-type', '', dirname(plugin_basename( __FILE__ ) ) . '/languages/' );
+        load_plugin_textdomain( 'rather-simple-project-custom-post-type', '', dirname( plugin_basename( __FILE__ ) ) . '/languages/' );
     }
 
     
@@ -109,18 +109,18 @@ class Project_Custom_Post_Type {
     function register_custom_type() {
 
         $labels = array(
-            'name' => __( 'Projects', 'project-custom-post-type' ),
-            'singular_name' => __( 'Project', 'project-custom-post-type' ),
-            'add_new' => __( 'Add New Project', 'project-custom-post-type' ),
-            'add_new_item' => __( 'Add New Project', 'project-custom-post-type' ),
-            'edit_item' => __( 'Edit Project', 'project-custom-post-type' ),
-            'new_item' => __( 'New Project', 'project-custom-post-type' ),
-            'view_item' => __( 'View Project', 'project-custom-post-type' ),
-            'search_items' => __( 'Search Projects', 'project-custom-post-type' ),
-            'not_found' => __( 'No Projects found', 'project-custom-post-type' ),
-            'not_found_in_trash' => __( 'No Projects found in Trash', 'project-custom-post-type' )
+            'name' => __( 'Projects', 'rather-simple-project-custom-post-type' ),
+            'singular_name' => __( 'Project', 'rather-simple-project-custom-post-type' ),
+            'add_new' => __( 'Add New Project', 'rather-simple-project-custom-post-type' ),
+            'add_new_item' => __( 'Add New Project', 'rather-simple-project-custom-post-type' ),
+            'edit_item' => __( 'Edit Project', 'rather-simple-project-custom-post-type' ),
+            'new_item' => __( 'New Project', 'rather-simple-project-custom-post-type' ),
+            'view_item' => __( 'View Project', 'rather-simple-project-custom-post-type' ),
+            'search_items' => __( 'Search Projects', 'rather-simple-project-custom-post-type' ),
+            'not_found' => __( 'No Projects found', 'rather-simple-project-custom-post-type' ),
+            'not_found_in_trash' => __( 'No Projects found in Trash', 'rather-simple-project-custom-post-type' )
         );
-      
+       
         $args = array(
             'show_ui' => true,
             'show_in_rest' => true,
@@ -208,7 +208,7 @@ class Project_Custom_Post_Type {
         foreach ( $columns as $key => $value ) {
             if ( $key == 'title' ) {
                 // Put the columns before the Date column
-                $new['thumbnail'] = __( 'Cover', 'project-custom-post-type' );
+                $new['thumbnail'] = __( 'Cover', 'rather-simple-project-custom-post-type' );
             }
             $new[$key] = $value;
         }
@@ -230,9 +230,9 @@ class Project_Custom_Post_Type {
                 if ( isset( $thumb ) && $thumb ) {
                     echo $thumb;
                 } else {
-                    echo __( 'None', 'project-custom-post-type' );
+                    echo __( 'None', 'rather-simple-project-custom-post-type' );
                 }
-                break;    
+            break;    
         }
     }
 
@@ -370,4 +370,4 @@ class Project_Custom_Post_Type {
 
 }
 
-add_action( 'plugins_loaded', array ( Project_Custom_Post_Type::get_instance(), 'plugin_setup' ) );
+add_action( 'plugins_loaded', array ( Rather_Simple_Project_Custom_Post_Type::get_instance(), 'plugin_setup' ) );

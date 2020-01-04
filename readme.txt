@@ -1,4 +1,4 @@
-=== Project Custom Post Type ===
+=== Rather Simple Project Custom Post Type ===
 Contributors: leemon
 Tags: project, post type
 Requires at least: 4.0
@@ -7,7 +7,7 @@ Stable tag: 1.0
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
-A project custom post type
+A really simple project custom post type
 
 == Description ==
 This plugin registers a custom post type for project items. It also registers category and tag taxonomies.
@@ -22,7 +22,7 @@ This plugin is experimental and is provided with no support or warranty.
 
 == Copyright ==
 
-Project Custom Post Type is distributed under the terms of the GNU GPL
+Rather Simple Project Custom Post Type is distributed under the terms of the GNU GPL
 
 This program is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
