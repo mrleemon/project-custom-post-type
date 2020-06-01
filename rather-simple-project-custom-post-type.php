@@ -191,7 +191,7 @@ class Rather_Simple_Project_Custom_Post_Type {
      */
     function enqueue_scripts() {
         // Load styles.
-        wp_enqueue_style( 'lightgallery', plugins_url( '/assets/css/lightgallery.css', __FILE__ ), array(), false );
+        wp_enqueue_style( 'lightgallery', plugins_url( '/assets/css/lightgallery.min.css', __FILE__ ), array(), false );
         wp_enqueue_style( 'pcpt-style', plugins_url( '/style.css', __FILE__ ) );
         
         // Load scripts.
