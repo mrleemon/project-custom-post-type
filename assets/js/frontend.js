@@ -40,16 +40,18 @@
         
         // Project lightbox
         var lg = document.getElementsByClassName( 'single-project' )[0];
-        lightGallery( lg, {
-            selector: '.single-project .project-image a',
-            mode: 'lg-slide',
-            preload: 5,
-            counter: false,
-            download: false
-        }); 
-        lg.addEventListener( 'onSlideClick.lg', function( e ) {
-            window.lgData[lg.getAttribute( 'lg-uid' )].goToNextSlide();
-        }, false);
+        if ( lg ) {
+            lightGallery( lg, {
+                selector: '.single-project .project-image a',
+                mode: 'lg-slide',
+                preload: 5,
+                counter: false,
+                download: false
+            }); 
+            lg.addEventListener( 'onSlideClick.lg', function( e ) {
+                window.lgData[lg.getAttribute( 'lg-uid' )].goToNextSlide();
+            }, false);
+        }
 
 	});
 
