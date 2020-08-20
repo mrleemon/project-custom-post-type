@@ -39,18 +39,17 @@
         }
         
         // Project lightbox
-        var $lg = $( '.single-project' );
-        $( $lg ).lightGallery({
+        var lg = document.getElementsByClassName( 'single-project' )[0];
+        lightGallery( lg, {
             selector: '.single-project .project-image a',
             mode: 'lg-slide',
-            appendSubHtmlTo: '',
             preload: 5,
             counter: false,
             download: false
-        });
-        $lg.on( 'onSlideClick.lg', function( event, index, fromTouch, fromThumb ) {
-            $lg.data( 'lightGallery' ).goToNextSlide();
-        });
+        }); 
+        lg.addEventListener( 'onSlideClick.lg', function( e ) {
+            window.lgData[lg.getAttribute( 'lg-uid' )].goToNextSlide();
+        }, false);
 
 	});
 
