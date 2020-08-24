@@ -48,8 +48,8 @@
                 counter: false,
                 download: false
             }); 
-            lg.addEventListener( 'onSlideClick.lg', function( e ) {
-                window.lgData[lg.getAttribute( 'lg-uid' )].goToNextSlide();
+            lg[i].addEventListener( 'onSlideClick.lg', function( e ) {
+                window.lgData[lg[i].getAttribute( 'lg-uid' )].goToNextSlide();
             }, false);
         }
 
