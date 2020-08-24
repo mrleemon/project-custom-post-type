@@ -39,9 +39,9 @@
         }
         
         // Project lightbox
-        var lg = document.getElementsByClassName( 'single-project' )[0];
-        if ( lg ) {
-            lightGallery( lg, {
+        var lg = document.getElementsByClassName( 'single-project' );
+        for ( var i = 0; i < lg.length; i++ ) {
+            lightGallery( lg[i], {
                 selector: '.single-project .project-image a',
                 mode: 'lg-slide',
                 preload: 5,
