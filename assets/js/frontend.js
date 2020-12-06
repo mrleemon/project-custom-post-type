@@ -1,6 +1,6 @@
 ( function( $ ) {
 
-	$( document ).ready( function() {
+    $( function() {
 		
         // Project description toggle
         $( '.single-project .toggle-content' ).on( 'click', function( e ) {
@@ -53,6 +53,6 @@
             }, false);
         }
 
-	});
+	} );
 
 } )( jQuery );
